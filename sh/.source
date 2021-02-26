@@ -25,7 +25,8 @@ install_rust rg ripgrep;
 
 # Starship
 if ! command -v starship &> /dev/null; then
-        curl -fsSL https://starship.rs/install.sh | bash
+        curl -fsSL https://starship.rs/install.sh | bash;
+	tab --install starship;
 fi
 
 # Year Progress
