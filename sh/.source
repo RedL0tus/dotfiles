@@ -8,20 +8,20 @@ fi
 # Utilities
 function install_rust {
 	if ! command -v $1 &> /dev/null; then
-		cargo install $1
+		cargo install $2
 	fi
 }
 
 alias vim=nano; # Pure goodness
 
-install_rust exa;
+install_rust exa exa;
 alias ls=exa;
 
-install_rust bat;
+install_rust bat bat;
 alias cat=bat;
 
-install_rust tab;
-install_rust ripgrep;
+install_rust tab tab;
+install_rust rg ripgrep;
 
 # Starship
 if ! command -v starship &> /dev/null; then
