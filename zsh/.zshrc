@@ -86,4 +86,10 @@ if [ -f "${HOME}/.local/share/tab/completion/zsh-history.zsh" ]; then
 fi
 
 # Starship
-eval "$(starship init zsh)";
+#eval "$(starship init zsh)";
+
+# Tab-rs status prompt
+setopt prompt_subst;
+if (($+TAB)); then
+	PROMPT="%{$fg[green]%}(${TAB})%{$reset_color%} $PROMPT";
+fi
