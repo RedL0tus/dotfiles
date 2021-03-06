@@ -1,9 +1,8 @@
 # Rust
-if [ -f ~/.cargo/env ]; then
-	source ~/.cargo/env;
-else
+if [ ! -f ~/.cargo/env ]; then
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh # Rustup
 fi
+source "$HOME/.cargo/env";
 
 # Utilities
 function install_rust {
@@ -30,3 +29,9 @@ install_rust rg ripgrep;
 
 # Year Progress
 source ~/.year_progress;
+
+# GPG Agent
+export GPG_TTY="$(tty)";
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket);
+gpgconf --launch gpg-agent;
+alias ssh="gpg-connect-agent updatestartuptty /bye > /dev/null; ssh";
