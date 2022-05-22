@@ -1,26 +1,43 @@
 # Rust
 if [ ! -f ~/.cargo/env ]; then
+	if ! command -v curl &> /dev/null; then
+		sudo pkcon install -y curl
+	fi
+
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh # Rustup
 fi
 source "$HOME/.cargo/env";
 
 # Utilities
-function install_rust {
+function ensure_command {
 	if ! command -v $1 &> /dev/null; then
-		cargo install $2
+		if ! command -v $1 &> /dev/null; then
+			sudo pkcon install -y $1;
+		fi
+		if ! command -v $1 &> /dev/null; then
+			cargo install $2;
+			if [ $? -ne 0 ]; then
+				cargo install $2 --locked;
+			fi
+		fi
 	fi
 }
 
 alias vim=nano; # Pure goodness
 
-install_rust exa exa;
+ensure_command exa exa;
 alias ls=exa;
 
-install_rust bat bat;
+ensure_command bat bat;
 alias cat=bat;
 
-install_rust tab tab;
-install_rust rg ripgrep;
+ensure_command tab tab;
+ensure_command rg ripgrep;
+
+# RPG CLI is not on crates.io
+if ! command -v rpg-cli &> /dev/null; then
+	cargo install --git https://github.com/facundoolano/rpg-cli --force --locked --tag 1.0.1;
+fi
 
 # Starship
 #if ! command -v starship &> /dev/null; then
@@ -31,7 +48,22 @@ install_rust rg ripgrep;
 source ~/.year_progress;
 
 # GPG Agent
-export GPG_TTY="$(tty)";
-export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket);
-gpgconf --launch gpg-agent;
-alias ssh="gpg-connect-agent updatestartuptty /bye > /dev/null; ssh";
+#export GPG_TTY="$(tty)";
+#export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket);
+#gpgconf --launch gpg-agent;
+#alias ssh="gpg-connect-agent updatestartuptty /bye > /dev/null; ssh";
+
+# RPG-CLI
+rpg () {
+    rpg-cli "$@"
+    cd "$(rpg-cli --pwd)"
+}
+
+# Vagrant
+export VAGRANT_DEFAULT_PROVIDER=libvirt
+
+# Nix
+if [ ! -d "/nix/store" ]; then
+	sh <(curl -L https://nixos.org/nix/install) --daemon
+fi
+export PATH="${HOME}/.nix-profile/bin/:/nix/var/nix/profiles/default/bin:$PATH";
