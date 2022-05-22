@@ -3,6 +3,9 @@ source /etc/profile;
 
 # Zgen
 if [ ! -d "${HOME}/.zgen" ]; then
+	if ! command -v direnv &> /dev/null; then
+		sudo pkcon install -y git;
+	fi
 	git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen";
 fi
 
@@ -83,13 +86,11 @@ fi
 # Tab-rs
 if [ -f "${HOME}/.local/share/tab/completion/zsh-history.zsh" ]; then
 	source "${HOME}/.local/share/tab/completion/zsh-history.zsh";
+	setopt prompt_subst;
+	if (($+TAB)); then
+		PROMPT="%{$fg[green]%}(${TAB})%{$reset_color%} $PROMPT";
+	fi
 fi
 
 # Starship
 #eval "$(starship init zsh)";
-
-# Tab-rs status prompt
-setopt prompt_subst;
-if (($+TAB)); then
-	PROMPT="%{$fg[green]%}(${TAB})%{$reset_color%} $PROMPT";
-fi
