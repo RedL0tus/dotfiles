@@ -75,3 +75,7 @@ fi
 export WASMTIME_HOME="$HOME/.wasmtime"
 export PATH="$WASMTIME_HOME/bin:$PATH"
 
+# Snapd
+if [ -d "/var/lib/snapd/snap/bin" ]; then
+	export PATH="/var/lib/snapd/snap/bin:$PATH"
+fi
