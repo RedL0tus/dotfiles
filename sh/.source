@@ -34,6 +34,11 @@ alias cat=bat;
 ensure_command tab tab;
 ensure_command rg ripgrep;
 
+# cargo-play
+if ! command -v cargo-play &> /dev/null; then
+	cargo install cargo-play
+fi
+
 # RPG CLI is not on crates.io
 if ! command -v rpg-cli &> /dev/null; then
 	cargo install --git https://github.com/facundoolano/rpg-cli --force --locked --tag 1.0.1;
