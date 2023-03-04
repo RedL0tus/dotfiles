@@ -24,7 +24,7 @@ return {
     bottom ,
   },
 
-  dpi = 96.0,
+  dpi = 144.0,
 
   font = plex_mono,
   freetype_load_target = "Normal",
@@ -44,5 +44,12 @@ return {
       remote_address = "10.0.200.11",
       username = "root",
     }
+  },
+
+  audible_bell = "Disabled",
+  visual_bell = {
+    fade_in_duration_ms = 75,
+    fade_out_duration_ms = 75,
+    target = "CursorColor"
   }
 }
