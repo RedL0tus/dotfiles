@@ -1,5 +1,10 @@
-# if running bash
-if [ -n "$BASH_VERSION" ]; then
+# Detect distro ID
+if [ -f "/etc/os-release" ]; then
+	source "/etc/os-release";
+fi
+
+# if running bash on Debian
+if [ -n "$BASH_VERSION" ] && [ "x${ID}" == "xdebian" ]; then
 	# include .bashrc if it exists
 	if [ -f "$HOME/.bashrc" ]; then
 		. "$HOME/.bashrc";
