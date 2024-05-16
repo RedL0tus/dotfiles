@@ -47,8 +47,8 @@ if test_command direnv; then
 	eval "$(direnv hook bash)";
 fi
 
-# year progress
-if test_command bc; then
+# Year Progress
+if test_command bc && [ -z "${SOURCED_DOTFILES_SH_PROFILE+x}" ]; then
 	"${HOME}/.local/bin/year_progress";
 fi
 
@@ -59,3 +59,5 @@ if [ -f "${HOME}/.gnupg/gpg-agent.conf" ] && \
 	gpgconf --launch gpg-agent;
 	export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket);
 fi
+
+export SOURCED_DOTFILES_SH_PROFILE="";
