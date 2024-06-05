@@ -1,16 +1,3 @@
-# Detect distro ID
-if [ -f "/etc/os-release" ]; then
-	source "/etc/os-release";
-fi
-
-# if running bash on Debian
-if [ -n "$BASH_VERSION" ] && [ "x${ID}" == "xdebian" ]; then
-	# include .bashrc if it exists
-	if [ -f "$HOME/.bashrc" ]; then
-		. "$HOME/.bashrc";
-	fi
-fi
-
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
 	PATH="$HOME/bin:$PATH";
@@ -48,7 +35,7 @@ if test_command direnv; then
 fi
 
 # Year Progress
-if test_command bc && [ -z "${SOURCED_DOTFILES_SH_PROFILE+x}" ]; then
+if test_command bc && [ -z "${SOURCED_DOTFILES_SH_PROFILE}" ]; then
 	"${HOME}/.local/bin/year_progress";
 fi
 
@@ -60,4 +47,18 @@ if [ -f "${HOME}/.gnupg/gpg-agent.conf" ] && \
 	export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket);
 fi
 
-export SOURCED_DOTFILES_SH_PROFILE="";
+export SOURCED_DOTFILES_SH_PROFILE=1;
+
+# Detect distro ID
+if [ -f "/etc/os-release" ]; then
+	source "/etc/os-release";
+fi
+
+# if running bash on Debian
+if [ -n "$BASH_VERSION" ] && { [ "x${ID}" == "xdebian" ] || [ "x${ID}" == "xubuntu" ]; }; then
+	# include .bashrc if it exists
+	if [ -f "$HOME/.bashrc" ]; then
+		. "$HOME/.bashrc";
+	fi
+fi
+
