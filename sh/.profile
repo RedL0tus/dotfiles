@@ -69,3 +69,8 @@ fi
 if [ -d "$GOPATH/bin" ]; then
 	export PATH="${PATH}:${GOPATH}/bin";
 fi
+
+# Rustup
+if [ -f "${HOME}/.cargo/env" ]; then
+        source "${HOME}/.cargo/env"
+fi
