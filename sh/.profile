@@ -62,3 +62,10 @@ if [ -n "$BASH_VERSION" ] && { [ "x${ID}" == "xdebian" ] || [ "x${ID}" == "xubun
 	fi
 fi
 
+# GOPATH
+if [ -d "${HOME}/Documents/GOPATH" ]; then
+	export GOPATH="${HOME}/Documents/GOPATH";
+fi
+if [ -d "$GOPATH/bin" ]; then
+	export PATH="${PATH}:${GOPATH}/bin";
+fi
