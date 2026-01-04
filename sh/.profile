@@ -74,3 +74,10 @@ fi
 if [ -f "${HOME}/.cargo/env" ]; then
         source "${HOME}/.cargo/env"
 fi
+
+# Node.js
+if test_command npm; then
+	NODE_ROOT_GLOBAL="$(npm root -g)"
+	NODE_BIN_PATH="$(realpath "${NODE_ROOT_GLOBAL}/../../bin")"
+	export PATH="${PATH}:$NODE_BIN_PATH"
+fi
