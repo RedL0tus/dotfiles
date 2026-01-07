@@ -81,3 +81,9 @@ if test_command npm; then
 	NODE_BIN_PATH="$(realpath "${NODE_ROOT_GLOBAL}/../../bin")"
 	export PATH="${PATH}:$NODE_BIN_PATH"
 fi
+
+# Bun
+if [ -d "${HOME}/.bun" ]; then
+	export BUN_INSTALL="${HOME}/.bun"
+	export PATH="${PATH}:${BUN_INSTALL}/bin"
+fi
